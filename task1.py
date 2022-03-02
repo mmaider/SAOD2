@@ -1,36 +1,37 @@
-def print_matrix(m):
-    for i in m:
-        print(i)
-    print("\n")
+from os import path
 
+import pygame
 
-def create_matrix(n):
-    arr = []
-    for i in range(n):
-        arr.append([])
-        for j in range(n):
-            arr[i].append(-1)
-    return arr
+import main
 
-def try_eightqueens(matrix, start_pos, sum_queens):
-   # while sum_queens != 8:
-    for i in range(8):
-        for j in range(8):
-            if matrix[i][j] == -1:
-                for t in range(8):
-                    matrix[i][t] = 0
-                    matrix[t][j] = 0
-                for t in range(j):
-                    matrix[i+t][j-t] = 0
-                for t in range(min(8-j, 8-i)):
-                    matrix[i+t][j+t] = 0
-                matrix[i][j] = 1
-                sum_queens += 1
-                print_matrix(matrix)
-                break
-    print(sum_queens)
+img_dir = path.join(path.dirname(__file__), 'img')
 
-matrix = create_matrix(8)
-print("Исходная матрица")
-print_matrix(matrix)
-try_eightqueens(matrix, 0, 0)
+WIDTH = 600
+HEIGHT = 600
+FPS = 60
+
+pygame.init()
+pygame.mixer.init()
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+clock = pygame.time.Clock()
+background = pygame.transform.scale(pygame.image.load(path.join(img_dir, "deck.png")).convert_alpha(), (WIDTH, HEIGHT))
+background_rect = background.get_rect()
+queen = pygame.transform.scale(pygame.image.load(path.join(img_dir, "queen.png")).convert_alpha(), (WIDTH // 8, HEIGHT // 8))
+running = True
+while running:
+    clock.tick(FPS)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+    screen.blit(background, background_rect)
+    start_x, start_y = 0, 0
+    for i in main.finalmatrix:
+        start_x = 0
+        for j in i:
+            if j == 1:
+                screen.blit(queen, [start_x, start_y])
+            start_x += WIDTH//8
+        start_y += WIDTH//8
+    pygame.display.flip()
+
+pygame.quit()
