@@ -40,7 +40,10 @@ def try_eightqueens(matrix, start_pos, sum_queens):
                 if result:
                     return result
                 else:
-                    matrixcopy = matrix.copy()
+                    for i in range(8):
+                        for j in range(8):
+                            tmp = matrix[i][j]
+                            matrixcopy[i][j] = tmp
                     for t in range(idqueen+1):
                         matrixcopy[start_pos][t] = 0
             else:
