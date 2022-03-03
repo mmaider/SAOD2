@@ -47,7 +47,7 @@ def try_eightqueens(matrix, start_pos, sum_queens):
                 # вывод всех решений:
                 #print_matrix(matrixcopy)
 
-            #спуск на уровень ниже
+            # спуск на уровень ниже
             result = try_eightqueens(matrixcopy, start_pos + 1, sum_queens + 1)
             if result:
                 return True

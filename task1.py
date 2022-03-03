@@ -1,37 +1,73 @@
-from os import path
+def BinarySearch(list, item):
+    list.sort()
+    low = 0
+    high = len(list) - 1
+    i = 0
+    while low <= high:
+        mid = (low + high) // 2
+        guess = list[mid]
+        if guess == item:
+            return mid
+        if guess > item:
+            high = mid - 1
+        else:
+            low = mid + 1
+        i = i + 1
+    return -1
 
-import pygame
 
-import main
+def FibonacciSearch(lys, val):
+    fibM_minus_2 = 0
+    fibM_minus_1 = 1
+    fibM = fibM_minus_1 + fibM_minus_2
+    while (fibM < len(lys)):
+        fibM_minus_2 = fibM_minus_1
+        fibM_minus_1 = fibM
+        fibM = fibM_minus_1 + fibM_minus_2
+    index = -1;
+    while (fibM > 1):
+        i = min(index + fibM_minus_2, (len(lys) - 1))
+        if (lys[i] < val):
+            fibM = fibM_minus_1
+            fibM_minus_1 = fibM_minus_2
+            fibM_minus_2 = fibM - fibM_minus_1
+            index = i
+        elif (lys[i] > val):
+            fibM = fibM_minus_2
+            fibM_minus_1 = fibM_minus_1 - fibM_minus_2
+            fibM_minus_2 = fibM - fibM_minus_1
+        else:
+            return i
+    if (fibM_minus_1 and index < (len(lys) - 1) and lys[index + 1] == val):
+        return index + 1;
+    return -1
 
-img_dir = path.join(path.dirname(__file__), 'img')
 
-WIDTH = 600
-HEIGHT = 600
-FPS = 60
+def InterpolationSearch(lys, val):
+    low = 0
+    high = (len(lys) - 1)
+    while low <= high and val >= lys[low] and val <= lys[high]:
+        index = low + int(((float(high - low) / (lys[high] - lys[low])) * (val - lys[low])))
+        if lys[index] == val:
+            return index
+        if lys[index] < val:
+            low = index + 1
+        else:
+            high = index - 1
+    return -1
 
-pygame.init()
-pygame.mixer.init()
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-clock = pygame.time.Clock()
-background = pygame.transform.scale(pygame.image.load(path.join(img_dir, "deck.png")).convert_alpha(), (WIDTH, HEIGHT))
-background_rect = background.get_rect()
-queen = pygame.transform.scale(pygame.image.load(path.join(img_dir, "queen.png")).convert_alpha(), (WIDTH // 8, HEIGHT // 8))
-running = True
-while running:
-    clock.tick(FPS)
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-    screen.blit(background, background_rect)
-    start_x, start_y = 0, 0
-    for i in main.finalmatrix:
-        start_x = 0
-        for j in i:
-            if j == 1:
-                screen.blit(queen, [start_x, start_y])
-            start_x += WIDTH//8
-        start_y += WIDTH//8
-    pygame.display.flip()
+def delete_thing(lys, ind):
+    tmplys = []
+    for i in range(len(lys)):
+        if i != ind:
+            tmplys.append(lys[i])
+    return tmplys
 
-pygame.quit()
+
+my_list = [6, 2, 3, 5, 9]
+print(BinarySearch(my_list, 3))
+print(FibonacciSearch(my_list, 3))
+i = InterpolationSearch(my_list, 3)
+print(my_list)
+print(i)
+print(delete_thing(my_list, i))
