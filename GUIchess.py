@@ -16,7 +16,8 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 background = pygame.transform.scale(pygame.image.load(path.join(img_dir, "deck.png")).convert_alpha(), (WIDTH, HEIGHT))
 background_rect = background.get_rect()
-queen = pygame.transform.scale(pygame.image.load(path.join(img_dir, "queen.png")).convert_alpha(), (WIDTH // 8, HEIGHT // 8))
+queen = pygame.transform.scale(pygame.image.load(path.join(img_dir, "queen.png")).convert_alpha(),
+                               (WIDTH // 8, HEIGHT // 8))
 running = True
 while running:
     clock.tick(FPS)
@@ -30,8 +31,8 @@ while running:
         for j in i:
             if j == 1:
                 screen.blit(queen, [start_x, start_y])
-            start_x += WIDTH//8
-        start_y += WIDTH//8
+            start_x += WIDTH // 8
+        start_y += WIDTH // 8
     pygame.display.flip()
 
 pygame.quit()
