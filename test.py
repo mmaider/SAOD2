@@ -2,7 +2,6 @@ import copy
 import random
 import time
 
-
 # бинарный поиск
 def BinarySearch(list, item):
     list.sort()

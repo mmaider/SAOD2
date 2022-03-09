@@ -15,11 +15,13 @@ class RandomHashMap:
 
     def insert_map(self, thing):
         flag = True
-        for i in range(self.size):
+        i = 0
+        while flag:
             tmp = self.hash_thing(self.hash_thing(thing) + self.randomarr[i])
             if tmp not in self.map.keys() or self.map[tmp] is None:
                 self.map[tmp] = thing
                 flag = False
+            i = (i+1)%len(self.randomarr)
 
     def search_map(self, thing):
         for i in range(self.size):
