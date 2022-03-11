@@ -2,6 +2,55 @@ import copy
 import random
 import time
 
+
+# бинарное дерево
+class Node:
+
+    def __init__(self, data):
+
+        self.left = None
+        self.right = None
+        self.data = data
+
+    def insert(self, data):
+
+        if self.data:
+            if data < self.data:
+                if self.left is None:
+                    self.left = Node(data)
+                else:
+                    self.left.insert(data)
+            elif data > self.data:
+                if self.right is None:
+                    self.right = Node(data)
+                else:
+                    self.right.insert(data)
+        else:
+            self.data = data
+
+    def findval(self, lkpval):
+        if lkpval < self.data:
+            if self.left is None:
+                print(lkpval, "не найден.")
+                return False
+            return self.left.findval(lkpval)
+        elif lkpval > self.data:
+            if self.right is None:
+                print(lkpval, "не найден.")
+                return False
+            return self.right.findval(lkpval)
+        else:
+            print(self.data, ' найден.')
+            return True
+
+    def PrintTree(self):
+        if self.left:
+            self.left.PrintTree()
+        print(self.data),
+        if self.right:
+            self.right.PrintTree()
+
+
 # бинарный поиск
 def BinarySearch(list, item):
     list.sort()
@@ -65,53 +114,6 @@ def InterpolationSearch(lys, val):
 
 
 # Бинарное дерево
-
-class Node:
-
-    def __init__(self, data):
-
-        self.left = None
-        self.right = None
-        self.data = data
-
-    def insert(self, data):
-
-        if self.data:
-            if data < self.data:
-                if self.left is None:
-                    self.left = Node(data)
-                else:
-                    self.left.insert(data)
-            elif data > self.data:
-                if self.right is None:
-                    self.right = Node(data)
-                else:
-                    self.right.insert(data)
-        else:
-            self.data = data
-
-    def findval(self, lkpval):
-        if lkpval < self.data:
-            if self.left is None:
-                print(lkpval, "не найден.")
-                return False
-            return self.left.findval(lkpval)
-        elif lkpval > self.data:
-            if self.right is None:
-                print(lkpval, "не найден.")
-                return False
-            return self.right.findval(lkpval)
-        else:
-            print(self.data, ' найден.')
-            return True
-
-    def PrintTree(self):
-        if self.left:
-            self.left.PrintTree()
-        print(self.data),
-        if self.right:
-            self.right.PrintTree()
-
 
 def make_a_tree(arr):
     root = Node(arr[0])
@@ -224,3 +226,11 @@ if task == "да" or task == "Да":
     mas.remove(num)
     root = make_a_tree(mas)
     root.PrintTree()
+
+print("Встроенный поиск")
+num = int(input("Введите число для поиска"))
+start_time_tree = time.time()
+result = mas.index(num)
+print(result)
+end_time_tree = time.time() - start_time_tree
+print("Время работы: ", end_time_tree)
